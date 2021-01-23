@@ -1,21 +1,13 @@
 const
     router = require('express').Router(),
-    fs = require('fs');
-router.post('/nuovoImport', (req, res) => {
-    const { data, ragione, importo } = req.body
-    const dati = {}
-    dati = {
-        "data": data,
-        "ragione": ragione,
-        "importo": importo
-    }
-    const jsonDati = JSON.stringify(dati)
-    fs.appendFile("dati.json", jsonDati, (err) => {
-        res.send("there was an error ").status(500)
-    })
-    const tuttiDati = fs.readFile("dati.json", (err) => {
-        res.send("there was an error ").status(500)
-    })
-    res.status(200).send(tuttiDati)
+    jsonData = require('./dati.json')
+router.get('/getImporti', (req, res) => {
+    res.status(200).send(jsonData)
+})
+router.post('/nuovoImporto', (req, res) => {
+    console.log("POST")
+    jsonData.push(req.body)
+    console.log(jsonData)
+    res.status(200).send(jsonData)
 })
 module.exports = router
