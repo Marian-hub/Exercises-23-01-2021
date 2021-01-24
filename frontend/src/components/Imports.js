@@ -1,5 +1,11 @@
 import { Component } from 'react'
 import axios from 'axios'
+import {
+    Button,
+    Input,
+    InputGroup,
+    InputGroupAddon,
+} from 'reactstrap'
 class Imports extends Component {
     constructor(props) {
         super(props)
@@ -29,7 +35,7 @@ class Imports extends Component {
         }).catch(err => {
             return err
         }).then(reponse => {
-            console.log(reponse)
+            this.getImporti()
             this.renderImporti()
         })
     }
@@ -42,7 +48,7 @@ class Imports extends Component {
                 })
             }).catch(err => {
                 if (err) {
-                    return err
+                    return err;
                 }
             })
     }
@@ -50,26 +56,24 @@ class Imports extends Component {
         await this.getImporti()
     }
     renderImporti() {
-        this.getImporti()
         const { importi } = this.state
-        const statusImport = {
-
-        }
         return importi.map((importo, index) => {
             if (importo.importo < 0) {
                 return (
                     <div key={index} style={{
                         backgroundColor: 'red',
                         display: "flex",
-                        justifyContent: "space-between"
+                        justifyContent: "space-between",
+                        marginRight: "5%",
+                        marginLeft: "5%"
                     }}>
-                        <p>
+                        <p style={{ marginLeft: "5%" }}>
                             {importo.data}
                         </p>
-                        <p>
+                        <p >
                             {importo.motivo}
                         </p>
-                        <p>
+                        <p style={{ marginRight: "5%" }}>
                             {importo.importo}
                         </p>
 
@@ -81,15 +85,17 @@ class Imports extends Component {
                     <div key={index} style={{
                         backgroundColor: 'green',
                         display: "flex",
-                        justifyContent: "space-between"
+                        justifyContent: "space-between",
+                        marginLeft: "5%",
+                        marginRight: "5%"
                     }}>
-                        <p>
+                        <p style={{ marginLeft: "5%" }}>
                             {importo.data}
                         </p>
-                        <p>
+                        <p >
                             {importo.motivo}
                         </p>
-                        <p>
+                        <p style={{ marginRight: "5%" }}>
                             {importo.importo}
                         </p>
 
@@ -118,14 +124,18 @@ class Imports extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" name="data" value={data} placeholder="data" onChange={this.handleChange} />
-                    <input type="text" name="motivo" value={motivo} placeholder="motivo" onChange={this.handleChange} />
-                    <input type="text" name="importo" value={importo} placeholder="importo" onChange={this.handleChange} />
-                    <input type="submit" value="submit" />
+                    <InputGroup>
+                        <Input type="text" name="motivo" value={motivo} placeholder="motivo" onChange={this.handleChange} ></Input>
+                        <Input type="text" name="data" value={data} placeholder="data" onChange={this.handleChange} ></Input>
+                        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
+                        <Input placeholder="Amount" type="number" name="importo" step="1" onChange={this.handleChange} />
+                        <InputGroupAddon addonType="append">.00</InputGroupAddon>
+                        <Button color="primary" type="submit" value="submit" style={{ margin: 0, marginRight: "50%" }} > + </Button>
+                    </InputGroup>
                 </form >
-                {this.getTotale()}
-                {this.renderImporti()}
-            </div>
+                <label style={{ marginLeft: "50%" }}>{this.getTotale()}</label>
+                { this.renderImporti()}
+            </div >
         )
     }
 }

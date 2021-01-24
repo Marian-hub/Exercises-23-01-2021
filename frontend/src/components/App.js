@@ -1,8 +1,9 @@
 import Imports from './Imports'
+import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
     return (
         <div>
-            <Imports></Imports>
+            <Imports ></Imports>
         </div>
     )
 }
